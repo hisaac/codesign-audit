@@ -12,7 +12,7 @@ xcsift = "latest"
 
 [tasks.bootstrap]
 alias = "up"
-run = "hk install"
+run = ["hk install", "scripts/update-hk-import.bash"]
 
 [tasks.codesign-audit]
 alias = "run"
