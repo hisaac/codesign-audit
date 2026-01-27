@@ -1,0 +1,12 @@
+{
+    "recommendations": [
+        "editorconfig.editorconfig",
+        "github.vscode-github-actions",
+        "hverlin.mise-vscode",
+        "tombi-toml.tombi",
+        "redhat.vscode-yaml",
+        "pkl.pkl-vscode",
+        "timonwong.shellcheck",
+        "swiftlang.swift-vscode"
+    ]
+}

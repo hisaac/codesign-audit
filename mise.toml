@@ -1,0 +1,46 @@
+[settings]
+experimental = true
+
+[tools]
+hk = "latest"
+pkl = "latest"
+shfmt = "latest"
+# swift = "latest"
+xcbeautify = "latest"
+# xcode = "latest"
+xcsift = "latest"
+
+[tasks.bootstrap]
+alias = "up"
+run = "hk install"
+
+[tasks.codesign-audit]
+alias = "run"
+run = "swift run codesign-audit"
+
+[tasks.build]
+run = "swift build --configuration release"
+
+[tasks.pre-commit]
+run = "hk run pre-commit"
+
+[tasks.check]
+run = "hk run check --all"
+
+[tasks.fix]
+alias = "format"
+run = "hk run fix --all"
+
+[tasks.clean]
+run = "swift package clean"
+
+[tasks.nuke]
+depends = ["clean"]
+run = [
+  "killall -q Xcode",
+  "rm -rf ./.build",
+  "rm -rf ./DerivedData",
+  "rm -rf ${HOME}/Library/Caches/org.swift.swiftpm",
+  "rm -rf ${HOME}/Library/Developer/Xcode/DerivedData",
+  "rm -rf ${HOME}/Library/org.swift.swiftpm",
+]
