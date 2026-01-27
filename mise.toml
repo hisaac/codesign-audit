@@ -1,6 +1,9 @@
 [settings]
 experimental = true
 
+[task_config]
+includes = ["scripts"]
+
 [tools]
 hk = "latest"
 pkl = "latest"
@@ -23,30 +26,6 @@ run = ["hk install", "scripts/update-hk-import.bash"]
 alias = "codesign-audit"
 depends = ["build"]
 run = ".build/debug/codesign-audit"
-
-[tasks.build]
-usage = '''
-arg "<configuration>" {
-  choices "debug" "release"
-  default "debug"
-}
-'''
-run = [
-  "mkdir -p .artifacts",
-  "set -o pipefail && swift build --configuration {{ usage.configuration }} | tee .artifacts/build.log | xcbeautify --disable-logging",
-]
-
-[tasks.build-ci]
-usage = '''
-arg "<configuration>" {
-  choices "debug" "release"
-  default "debug"
-}
-'''
-run = [
-  "mkdir -p .artifacts",
-  "set -o pipefail && swift build --configuration {{ usage.configuration }} | tee .artifacts/build.log | xcbeautify --disable-logging --renderer github-actions",
-]
 
 [tasks.pre-commit]
 run = "hk run pre-commit"
