@@ -5,21 +5,48 @@ experimental = true
 hk = "latest"
 pkl = "latest"
 shfmt = "latest"
-# swift = "latest"
+usage = "latest"
 xcbeautify = "latest"
-# xcode = "latest"
 xcsift = "latest"
+yamlfmt = "latest"
+yamllint = "latest"
+
+[tools.swift]
+version = "latest"
+os = ["linux"]
 
 [tasks.bootstrap]
 alias = "up"
 run = ["hk install", "scripts/update-hk-import.bash"]
 
-[tasks.codesign-audit]
-alias = "run"
-run = "swift run codesign-audit"
+[tasks.run]
+alias = "codesign-audit"
+depends = ["build"]
+run = ".build/debug/codesign-audit"
 
 [tasks.build]
-run = "swift build --configuration release"
+usage = '''
+arg "<configuration>" {
+  choices "debug" "release"
+  default "debug"
+}
+'''
+run = [
+  "mkdir -p .artifacts",
+  "set -o pipefail && swift build --configuration {{ usage.configuration }} | tee .artifacts/build.log | xcbeautify --disable-logging",
+]
+
+[tasks.build-ci]
+usage = '''
+arg "<configuration>" {
+  choices "debug" "release"
+  default "debug"
+}
+'''
+run = [
+  "mkdir -p .artifacts",
+  "set -o pipefail && swift build --configuration {{ usage.configuration }} | tee .artifacts/build.log | xcbeautify --disable-logging --renderer github-actions",
+]
 
 [tasks.pre-commit]
 run = "hk run pre-commit"
@@ -37,8 +64,8 @@ run = "swift package clean"
 [tasks.nuke]
 depends = ["clean"]
 run = [
-  "killall -q Xcode",
   "rm -rf ./.build",
+  "rm -rf ./.artifacts",
   "rm -rf ./DerivedData",
   "rm -rf ${HOME}/Library/Caches/org.swift.swiftpm",
   "rm -rf ${HOME}/Library/Developer/Xcode/DerivedData",
