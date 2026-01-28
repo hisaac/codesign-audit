@@ -1,14 +1,29 @@
+---
+# https://swiftonserver.com/faster-github-actions-ci-for-swift-projects/
+
 on:
   pull_request:
   push:
     branches: [main]
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
 jobs:
   build:
-    runs-on: macos-26
+    strategy:
+      fail-fast: false
+      matrix:
+        runs-on:
+          - macos-26
+          - ubuntu-latest
+    runs-on: ${{ matrix.runs-on }}
     steps:
       - uses: actions/checkout@v6
       - uses: jdx/mise-action@v3
-      - run: mise run build release
+      - uses: brightdigit/swift-build@v1.4.2
+        with:
+          build-only: true
+          scheme: codesign-audit
+          use-xcbeautify: true

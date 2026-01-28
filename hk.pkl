@@ -12,7 +12,6 @@ local linters = new Mapping<String, Step> {
 	["shellcheck"] = Builtins.shellcheck
 	["shfmt"] = Builtins.shfmt
 	["yamlfmt"] = Builtins.yamlfmt
-	["yamllint"] = Builtins.yamllint
 
 	// Generic linters
 	["fix-smart-quotes"] = Builtins.fix_smart_quotes

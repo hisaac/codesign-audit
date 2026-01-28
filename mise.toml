@@ -12,7 +12,6 @@ usage = "latest"
 xcbeautify = "latest"
 xcsift = "latest"
 yamlfmt = "latest"
-yamllint = "latest"
 
 [tools.swift]
 version = "latest"
@@ -25,16 +24,17 @@ run = ["hk install", "scripts/update-hk-import.bash"]
 [tasks.run]
 alias = "codesign-audit"
 depends = ["build"]
-run = ".build/debug/codesign-audit"
+run = "swift run --skip-build codesign-audit"
 
 [tasks.pre-commit]
 run = "hk run pre-commit"
 
 [tasks.check]
+alias = ["chk", "lint"]
 run = "hk run check --all"
 
 [tasks.fix]
-alias = "format"
+alias = ["fmt", "format"]
 run = "hk run fix --all"
 
 [tasks.clean]
