@@ -26,4 +26,5 @@ jobs:
         with:
           build-only: true
           scheme: codesign-audit
+          skip-package-resolved: true
           use-xcbeautify: true
