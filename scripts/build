@@ -7,10 +7,11 @@
 
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/common.bash" || exit 1
 
-declare -ra xcbeautify_args=("--disable-logging")
+declare -a xcbeautify_args=("--disable-logging")
 if [[ "${GITHUB_ACTIONS:-}" == "true" ]]; then
 	xcbeautify_args+=("--renderer" "github-actions")
 fi
+readonly xcbeautify_args
 
 mkdir -p "${ARTIFACTS_DIR}"
 swift build --configuration "${usage_configuration?}" \

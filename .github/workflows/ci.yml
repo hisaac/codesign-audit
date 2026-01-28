@@ -22,9 +22,16 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: jdx/mise-action@v3
-      - uses: brightdigit/swift-build@v1.4.2
+
+      # Cache Swift Package Manager dependencies
+      # https://brightdigit.com/tutorials/swift-build/#-matrix-testing-the-game-changer:~:text=Step%203%3A%20Intelligent%20Caching%20Strategy
+      - uses: actions/cache@v5
         with:
-          build-only: true
-          scheme: codesign-audit
-          skip-package-resolved: true
-          use-xcbeautify: true
+          path: |
+            .build
+            ~/.cache/org.swift.swiftpm
+          key: ${{ runner.os }}-spm-${{ hashFiles('Package.swift', 'Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-
+
+      - run: mise run build release
