@@ -12,13 +12,7 @@ concurrency:
 
 jobs:
   build:
-    strategy:
-      fail-fast: false
-      matrix:
-        runs-on:
-          - macos-26
-          - ubuntu-latest
-    runs-on: ${{ matrix.runs-on }}
+    runs-on: macos-26
     steps:
       - uses: actions/checkout@v6
       - uses: jdx/mise-action@v3
@@ -35,3 +29,9 @@ jobs:
             ${{ runner.os }}-spm-
 
       - run: mise run build release
+
+      - uses: actions/upload-artifact@v6
+        with:
+          include-hidden-files: true
+          name: ${{ runner.os }}-artifacts
+          path: .artifacts

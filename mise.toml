@@ -13,10 +13,6 @@ xcbeautify = "latest"
 xcsift = "latest"
 yamlfmt = "latest"
 
-[tools.swift]
-version = "latest"
-os = ["linux"]
-
 [tasks.bootstrap]
 alias = "up"
 run = ["hk install", "scripts/update-hk-import.bash"]
