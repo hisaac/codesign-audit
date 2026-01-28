@@ -1,34 +1,36 @@
 [settings]
 experimental = true
 
+[task_config]
+includes = ["scripts"]
+
 [tools]
 hk = "latest"
 pkl = "latest"
 shfmt = "latest"
-# swift = "latest"
+usage = "latest"
 xcbeautify = "latest"
-# xcode = "latest"
 xcsift = "latest"
+yamlfmt = "latest"
 
 [tasks.bootstrap]
 alias = "up"
 run = ["hk install", "scripts/update-hk-import.bash"]
 
-[tasks.codesign-audit]
-alias = "run"
-run = "swift run codesign-audit"
-
-[tasks.build]
-run = "swift build --configuration release"
+[tasks.run]
+alias = "codesign-audit"
+depends = ["build"]
+run = "swift run --skip-build codesign-audit"
 
 [tasks.pre-commit]
 run = "hk run pre-commit"
 
 [tasks.check]
+alias = ["chk", "lint"]
 run = "hk run check --all"
 
 [tasks.fix]
-alias = "format"
+alias = ["fmt", "format"]
 run = "hk run fix --all"
 
 [tasks.clean]
@@ -37,8 +39,8 @@ run = "swift package clean"
 [tasks.nuke]
 depends = ["clean"]
 run = [
-  "killall -q Xcode",
   "rm -rf ./.build",
+  "rm -rf ./.artifacts",
   "rm -rf ./DerivedData",
   "rm -rf ${HOME}/Library/Caches/org.swift.swiftpm",
   "rm -rf ${HOME}/Library/Developer/Xcode/DerivedData",
