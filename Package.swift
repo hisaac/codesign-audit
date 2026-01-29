@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
 	name: "codesign-audit",
 	platforms: [
-		.macOS(.v13),
+		.macOS(.v15),
 	],
 	dependencies: [
 		.package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.7.0"),

@@ -1,10 +1,14 @@
 [settings]
 experimental = true
 
-[task_config]
-includes = ["scripts"]
+[plugins]
+xcode = "https://github.com/hisaac/mise-xcode.git"
+
+[env._.xcode]
+version = "26"
 
 [tools]
+actionlint = "latest"
 hk = "latest"
 pkl = "latest"
 shfmt = "latest"
@@ -12,6 +16,9 @@ usage = "latest"
 xcbeautify = "latest"
 xcsift = "latest"
 yamlfmt = "latest"
+
+[task_config]
+includes = ["scripts"]
 
 [tasks.bootstrap]
 alias = "up"

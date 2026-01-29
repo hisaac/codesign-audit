@@ -11,9 +11,18 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  MISE_ENV: ci
+
 jobs:
   build:
-    runs-on: macos-26
+    strategy:
+      fail-fast: false
+      matrix:
+        runs-on:
+          - macos-26
+          - ubuntu-latest
+    runs-on: ${{ matrix.runs-on }}
     steps:
       - uses: actions/checkout@v6
       - uses: jdx/mise-action@v3
