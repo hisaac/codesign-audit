@@ -1,0 +1,37 @@
+---
+# https://swiftonserver.com/faster-github-actions-ci-for-swift-projects/
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v6
+      - uses: jdx/mise-action@v3
+
+      # Cache Swift Package Manager dependencies
+      # https://brightdigit.com/tutorials/swift-build/#-matrix-testing-the-game-changer:~:text=Step%203%3A%20Intelligent%20Caching%20Strategy
+      - uses: actions/cache@v5
+        with:
+          path: |
+            .build
+            ~/.cache/org.swift.swiftpm
+          key: ${{ runner.os }}-spm-${{ hashFiles('Package.swift', 'Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-
+
+      - run: mise run build release
+
+      - uses: actions/upload-artifact@v6
+        with:
+          include-hidden-files: true
+          name: ${{ runner.os }}-artifacts
+          path: .artifacts
