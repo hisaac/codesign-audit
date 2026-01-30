@@ -1,0 +1,8 @@
+{
+  "asc": {
+    "issuer_id": "YOUR_ISSUER_ID",
+    "key_id": "YOUR_KEY_ID",
+    "private_key_path": "/path/to/AuthKey_ABC123.p8",
+    "token_expiration": "1200"
+  }
+}
