@@ -3,9 +3,12 @@
 import PackageDescription
 
 let package = Package(
-	name: "codesign-audit",
+	name: "CodesignAudit",
 	platforms: [
 		.macOS(.v15),
+	],
+	products: [
+		.executable(name: "codesign-audit", targets: ["CodesignAuditCLI"])
 	],
 	dependencies: [
 		.package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.7.0"),
@@ -15,14 +18,14 @@ let package = Package(
 	],
 	targets: [
 		.executableTarget(
-			name: "codesign-audit",
+			name: "CodesignAuditCLI",
 			dependencies: [
 				.product(name: "ArgumentParser", package: "swift-argument-parser"),
 				.product(name: "Configuration", package: "swift-configuration"),
 				.product(name: "AppStoreConnect-Swift-SDK", package: "appstoreconnect-swift-sdk"),
 				.product(name: "Noora", package: "Noora"),
 			],
-			path: "src/codesign-audit/Sources"
+			path: "src/CodesignAuditCLI/Sources"
 		),
 	]
 )

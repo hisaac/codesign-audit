@@ -1,6 +1,2 @@
-[settings]
-activate_aggressive = true
-
-[tools.swift]
-version = "latest"
-os = ["linux"]
+[env._.xcode]
+version = ""

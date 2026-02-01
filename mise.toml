@@ -14,12 +14,19 @@ hk = "latest"
 pkl = "latest"
 shfmt = "latest"
 usage = "latest"
-xcbeautify = "latest"
 xcsift = "latest"
 yamlfmt = "latest"
 
+[tools.swift]
+version = "latest"
+os = ["linux"]
+
 [hooks]
-postinstall = "mise run bootstrap"
+postinstall = '''
+if [ ${CI:-} != "true" ]; then
+  mise run bootstrap
+fi
+'''
 
 # Tasks
 
@@ -28,7 +35,7 @@ includes = ["scripts"]
 
 [tasks.bootstrap]
 alias = "up"
-run = ["hk install", "scripts/update-hk-import"]
+run = ["hk install", { task = "update-hk-import" }]
 
 [tasks.run]
 alias = "codesign-audit"
