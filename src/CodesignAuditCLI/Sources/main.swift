@@ -3,8 +3,7 @@ import Configuration
 import AppStoreConnect_Swift_SDK
 import Noora
 
-@main
-struct codesign_audit: ParsableCommand {
+struct CodesignAuditCLI: ParsableCommand {
 	mutating func run() throws {
 		print("Hello, world!")
 	}
