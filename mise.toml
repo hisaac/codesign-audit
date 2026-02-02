@@ -37,6 +37,16 @@ includes = ["scripts"]
 alias = "up"
 run = ["hk install", { task = "update-hk-import" }]
 
+[tasks.build]
+description = "Build the CLI"
+usage = '''
+arg "<configuration>" {
+  choices "debug" "release"
+  default "debug"
+}
+'''
+run = "swift build --configuration ${usage_configuration?}"
+
 [tasks.run]
 alias = "codesign-audit"
 depends = ["build"]
@@ -57,7 +67,6 @@ run = "swift package clean"
 depends = ["clean"]
 run = [
   "rm -rf ./.build",
-  "rm -rf ./.artifacts",
   "rm -rf ./DerivedData",
   "rm -rf ${HOME}/Library/Caches/org.swift.swiftpm",
   "rm -rf ${HOME}/Library/Developer/Xcode/DerivedData",
