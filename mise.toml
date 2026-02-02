@@ -23,7 +23,7 @@ os = ["linux"]
 
 [hooks]
 postinstall = '''
-if [ ${CI:-} != "true" ]; then
+if [ "$CI" != "true" ]; then
   mise run bootstrap
 fi
 '''
