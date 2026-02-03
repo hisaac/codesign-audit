@@ -1,5 +1,5 @@
 {
-  "originHash" : "5e632f6d9ae34c3c26ede3cceda7b76c9fc80b2a2afb3eb8850af3bf9ecc1afc",
+  "originHash" : "a3c508bb2c9fb7754b7abd49953c9a97f8b82de1a5f8e70c4b02d43849872d1f",
   "pins" : [
     {
       "identity" : "appstoreconnect-swift-sdk",
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "bf2222995703f2a2500a2bbb8153fdb5d3a851ed",
         "version" : "0.54.0"
+      }
+    },
+    {
+      "identity" : "opencombine",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/OpenCombine/OpenCombine.git",
+      "state" : {
+        "revision" : "8576f0d579b27020beccbccc3ea6844f3ddfc2c2",
+        "version" : "0.14.0"
       }
     },
     {
@@ -78,8 +87,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-configuration.git",
       "state" : {
-        "revision" : "6ffef195ed4ba98ee98029970c94db7edc60d4c6",
-        "version" : "1.0.1"
+        "revision" : "b4768bd68d8a6fb356bd372cb41905046244fcae",
+        "version" : "1.0.2"
       }
     },
     {
