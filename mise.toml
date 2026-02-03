@@ -6,7 +6,7 @@ lockfile = true
 xcode = "https://github.com/hisaac/mise-xcode.git"
 
 [env._.xcode]
-version = "26"
+version = "26.2"
 
 [tools]
 actionlint = "latest"
@@ -19,7 +19,6 @@ yamlfmt = "latest"
 
 [tools.swift]
 version = "latest"
-os = ["linux"]
 
 [hooks]
 postinstall = '''
@@ -35,7 +34,10 @@ includes = ["scripts"]
 
 [tasks.bootstrap]
 alias = "up"
-run = ["hk install", { task = "update-hk-import" }]
+run = ["hk install", { task = "update-hk-import" }, "swift package resolve"]
+
+[tasks.update]
+run = ["mise upgrade --bump", "swift package update"]
 
 [tasks.build]
 description = "Build the CLI"
