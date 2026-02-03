@@ -1,5 +1,5 @@
 {
-  "originHash" : "5e632f6d9ae34c3c26ede3cceda7b76c9fc80b2a2afb3eb8850af3bf9ecc1afc",
+  "originHash" : "393dfaabff1fde96c3323c049c4b10e61f7160a56bdea69b9394ad64d6a0a353",
   "pins" : [
     {
       "identity" : "appstoreconnect-swift-sdk",
@@ -78,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-configuration.git",
       "state" : {
-        "revision" : "6ffef195ed4ba98ee98029970c94db7edc60d4c6",
-        "version" : "1.0.1"
+        "revision" : "b4768bd68d8a6fb356bd372cb41905046244fcae",
+        "version" : "1.0.2"
       }
     },
     {
