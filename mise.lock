@@ -36,6 +36,7 @@ backend = "aqua:mvdan/sh"
 [[tools.swift]]
 version = "6.2.3"
 backend = "core:swift"
+"platforms.macos-arm64" = { checksum = "blake3:9ae13788a8420046f4bf3311777ffc52a5c9f95b92ab1dad4ec7801f3494d6a7"}
 
 [[tools.usage]]
 version = "2.16.1"
