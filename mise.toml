@@ -2,11 +2,11 @@
 experimental = true
 lockfile = true
 
-[plugins]
-xcode = "https://github.com/hisaac/mise-xcode.git"
-
-[env._.xcode]
-version = "26"
+# Currently broken
+# [plugins]
+# xcode = "https://github.com/hisaac/mise-xcode.git"
+# [env._.xcode]
+# version = "26"
 
 [tools]
 actionlint = "latest"
@@ -34,13 +34,30 @@ includes = ["scripts"]
 
 [tasks.bootstrap]
 alias = "up"
-run = ["hk install", { task = "update-hk-import" }, "swift package resolve"]
+run = [
+  "hk install",
+  { task = "update-hk-import" },
+  "swift package resolve",
+  "mise lock",
+]
 
 [tasks.update]
-run = ["mise plugins update", "mise upgrade", "swift package update"]
+alias = "upd"
+run = [
+  "mise plugins update",
+  "mise upgrade",
+  "swift package update",
+  "mise lock",
+]
 
 [tasks.upgrade]
-run = ["mise plugins update", "mise upgrade --bump", "swift package update"]
+alias = "upg"
+run = [
+  "mise plugins update",
+  "mise upgrade --bump",
+  "swift package update",
+  "mise lock",
+]
 
 [tasks.build]
 description = "Build the CLI"
@@ -50,12 +67,18 @@ arg "<configuration>" {
   default "debug"
 }
 '''
+sources = [
+  ".build/checkouts/**/*.swift",
+  "Package.resolved",
+  "Package.swift",
+  "src/**/*.swift",
+]
 run = "swift build --configuration ${usage_configuration?}"
 
 [tasks.run]
-alias = "codesign-audit"
+alias = ["codesign-audit", "csa"]
 depends = ["build"]
-run = "swift run --skip-build codesign-audit"
+run = "swift run --skip-build csa"
 
 [tasks.check]
 alias = ["chk", "lint"]

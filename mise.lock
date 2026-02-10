@@ -8,12 +8,12 @@ backend = "aqua:rhysd/actionlint"
 "platforms.windows-x64" = { checksum = "sha256:283467f9d6202a8cb8c00ad8dd0ee4e685b71fb86a6a56c68fcbb9ae8ed91237", url = "https://github.com/rhysd/actionlint/releases/download/v1.7.10/actionlint_1.7.10_windows_amd64.zip"}
 
 [[tools.hk]]
-version = "1.35.0"
+version = "1.36.0"
 backend = "aqua:jdx/hk"
-"platforms.linux-arm64" = { checksum = "sha256:e51d6404b59b2cebba411bf3900f93e81fb7ad807b7faaf8916c64c6fb327328", url = "https://github.com/jdx/hk/releases/download/v1.35.0/hk-aarch64-unknown-linux-gnu.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:1e2b7642c099faa4df20b4591059826529d7dafaed9dac98cd2212317c7c071e", url = "https://github.com/jdx/hk/releases/download/v1.35.0/hk-x86_64-unknown-linux-gnu.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:ace34e486adc4fe22419e55ff14bacfe9a49deab47d6fba87138160bc0a6ee47", url = "https://github.com/jdx/hk/releases/download/v1.35.0/hk-aarch64-apple-darwin.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:204789f5fa33600eecd8ac0c9ac13ebf4834d9512f9840d66cc0db8251e8d57d", url = "https://github.com/jdx/hk/releases/download/v1.35.0/hk-x86_64-pc-windows-msvc.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:51cf51e2035038ee64d772e71f8daf4978380ef82faffee2b12c413f009341ab", url = "https://github.com/jdx/hk/releases/download/v1.36.0/hk-aarch64-unknown-linux-gnu.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:d20fa0be3f1135abc74471670306ae0353ad2336804595362293f0c8460952e7", url = "https://github.com/jdx/hk/releases/download/v1.36.0/hk-x86_64-unknown-linux-gnu.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:553ff3c7c18d91f1c1dcdbae44315db0324b52336b5a02ed5b9c382f08499b3b", url = "https://github.com/jdx/hk/releases/download/v1.36.0/hk-aarch64-apple-darwin.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:1f12218ccad806a3f49bcf521f86b6825fbd89486e830c1c04f72e3796f84589", url = "https://github.com/jdx/hk/releases/download/v1.36.0/hk-x86_64-pc-windows-msvc.zip"}
 
 [[tools.pkl]]
 version = "0.30.2"
@@ -47,10 +47,10 @@ backend = "aqua:jdx/usage"
 "platforms.macos-x64" = { checksum = "sha256:3bba8d4916da22dbd4afe4ab6c59c988765d7e0374e1121b43ce8b1a282cfc78", url = "https://github.com/jdx/usage/releases/download/v2.16.1/usage-universal-apple-darwin.tar.gz"}
 
 [[tools.xcsift]]
-version = "1.1.1"
+version = "1.1.3"
 backend = "github:ldomaradzki/xcsift"
-"platforms.linux-x64" = { checksum = "sha256:46a5b261151f4e0fb334857b697c95299a670c9c8e2870db9bb1573820444d44", url = "https://github.com/ldomaradzki/xcsift/releases/download/v1.1.1/xcsift-v1.1.1-linux-x64.tar.gz", url_api = "https://api.github.com/repos/ldomaradzki/xcsift/releases/assets/349115686"}
-"platforms.macos-arm64" = { checksum = "sha256:2e9fb443a5bcc4c42ce90679c429fd52cd53a26b3a754c2eb1a1630c09e71d47", url = "https://github.com/ldomaradzki/xcsift/releases/download/v1.1.1/xcsift-v1.1.1-macos-arm64.tar.gz", url_api = "https://api.github.com/repos/ldomaradzki/xcsift/releases/assets/349115687"}
+"platforms.linux-x64" = { checksum = "sha256:c4c9a773cbd5d7dc4e3fd525d6a372add3430ddc852ad9820f385b8709ace3dc", url = "https://github.com/ldomaradzki/xcsift/releases/download/v1.1.3/xcsift-v1.1.3-linux-x64.tar.gz", url_api = "https://api.github.com/repos/ldomaradzki/xcsift/releases/assets/351727422"}
+"platforms.macos-arm64" = { checksum = "sha256:5298bb8098c87a6d91bfcf5e9ed4e4413d5d29b8ce9462f4407aec98f98c2c30", url = "https://github.com/ldomaradzki/xcsift/releases/download/v1.1.3/xcsift-v1.1.3-macos-arm64.tar.gz", url_api = "https://api.github.com/repos/ldomaradzki/xcsift/releases/assets/351727421"}
 
 [[tools.yamlfmt]]
 version = "0.21.0"

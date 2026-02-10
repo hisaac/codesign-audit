@@ -1,7 +1,8 @@
 import ArgumentParser
 import Foundation
 
-struct CodesignAuditCLI: AsyncParsableCommand {
+@main
+struct csa: AsyncParsableCommand {
 	@OptionGroup var options: GlobalOptions
 	@OptionGroup var apiOptions: AppStoreConnectOptions
 
@@ -35,8 +36,6 @@ struct CodesignAuditCLI: AsyncParsableCommand {
 		}
 	}
 }
-
-CodesignAuditCLI.main()
 
 struct GlobalOptions: ParsableArguments {
 	@Flag(
