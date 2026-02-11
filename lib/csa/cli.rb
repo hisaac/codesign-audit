@@ -17,7 +17,9 @@ module CSA
     end
 
     def run
+      no_args = @argv.empty?
       parse_result = parse_args(@argv)
+      return print_help(parse_result[:parser]) if no_args
       return print_help(parse_result[:parser]) if parse_result[:help]
       return print_version if parse_result[:version]
 
