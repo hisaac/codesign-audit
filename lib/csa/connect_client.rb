@@ -23,6 +23,7 @@ module CSA
         key_id: @config.api_key_id,
         issuer_id: @config.api_issuer_id,
         filepath: @config.api_key_file,
+        key: @config.api_key_content,
         in_house: in_house
       )
       Spaceship::ConnectAPI.token = token

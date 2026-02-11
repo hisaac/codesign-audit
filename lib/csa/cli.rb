@@ -77,6 +77,7 @@ module CSA
         opts.on('--api-key-id KEY_ID') { |v| options[:api_key_id] = v }
         opts.on('--api-issuer-id ISSUER_ID') { |v| options[:api_issuer_id] = v }
         opts.on('--api-key-file PATH') { |v| options[:api_key_file] = v }
+        opts.on('--api-key-stdin', 'Read ASC API key contents from stdin') { options[:api_key_stdin] = true }
         opts.on('--in-house') { options[:in_house] = true }
         opts.on('--json') { options[:json] = true }
         opts.on('--filter TYPES', 'Comma-separated filters: error,warn,ok') { |v| options[:filter] = v }

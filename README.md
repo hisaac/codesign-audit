@@ -48,6 +48,7 @@ Options:
 - `--api-key-id KEY_ID`
 - `--api-issuer-id ISSUER_ID`
 - `--api-key-file PATH`
+- `--api-key-stdin` (read ASC key contents from stdin)
 - `--in-house`
 - `--json`
 - `--filter TYPES` where `TYPES` is comma-separated (`error,warn,ok`)
@@ -69,6 +70,9 @@ csa profiles --exclude-development
 
 # Force enterprise mode
 csa list --in-house
+
+# Pipe API key contents on stdin
+cat AuthKey_ABC123XYZ.p8 | csa list --api-key-id ABC123XYZ --api-issuer-id 11111111-2222-3333-4444-555555555555 --api-key-stdin
 ```
 
 ## Backward compatibility
