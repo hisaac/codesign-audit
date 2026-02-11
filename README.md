@@ -1,43 +1,79 @@
-# codesign-audit
+# csa
 
-Swift CLI that audits code-signing resources for a specific app or Apple developer profile.
+`csa` is a Ruby CLI for querying Apple App Store Connect and Enterprise APIs for:
+- Code-signing certificates
+- Provisioning profiles
 
-## Run
+## Installation
 
-```sh
-mise run run -- --config ./config.example.json
+### Local development
+
+```bash
+bundle install
+bundle exec ruby bin/csa --help
 ```
 
-## Configuration
+### Build/install as a gem
 
-The App Store Connect credentials can be provided via:
-
-1. CLI args
-2. Environment variables
-3. JSON config file
-
-Priority is listed above (CLI overrides env, env overrides file).
-
-### CLI args
-
-```sh
-swift run codesign-audit \
-  --asc-issuer-id YOUR_ISSUER_ID \
-  --asc-key-id YOUR_KEY_ID \
-  --asc-private-key-path /path/to/AuthKey_ABC123.p8 \
-  --asc-token-expiration 1200
+```bash
+gem build csa.gemspec
+gem install ./csa-*.gem
+csa --help
 ```
 
-### Environment variables
+## Authentication
 
-```sh
-export ASC_ISSUER_ID=YOUR_ISSUER_ID
-export ASC_KEY_ID=YOUR_KEY_ID
-export ASC_PRIVATE_KEY_PATH=/path/to/AuthKey_ABC123.p8
-# or: export ASC_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----"
-export ASC_TOKEN_EXPIRATION=1200
+Provide App Store Connect API credentials via flags or environment:
+
+- `ASC_KEY_ID`
+- `ASC_ISSUER_ID`
+- `ASC_KEY_FILE`
+
+The CLI also auto-detects `AuthKey_<KEY_ID>.p8` in the current directory when `ASC_KEY_ID` (or `--api-key-id`) is set.
+
+## Usage
+
+```bash
+csa [list] [options]
+csa certificates [options]
+csa profiles [options]
 ```
 
-### JSON config file
+Commands:
+- `list`: show both certificates and profiles (default)
+- `certificates`: only certificates
+- `profiles`: only profiles
 
-See `config.example.json` for the expected shape. Use `--config` to provide the path.
+Options:
+- `--api-key-id KEY_ID`
+- `--api-issuer-id ISSUER_ID`
+- `--api-key-file PATH`
+- `--in-house`
+- `--json`
+- `--filter TYPES` where `TYPES` is comma-separated (`error,warn,ok`)
+- `--exclude-development`
+- `-h, --help`
+- `-v, --version`
+
+Examples:
+
+```bash
+# Default command is "list"
+csa --json
+
+# Explicit command
+csa certificates --filter error,warn
+
+# Profiles only, excluding development profiles
+csa profiles --exclude-development
+
+# Force enterprise mode
+csa list --in-house
+```
+
+## Backward compatibility
+
+Legacy behavior is preserved:
+- `csa` without a command still returns both certificates and profiles.
+- `csa certificates` and `csa profiles` continue to work.
+- `csa.rb` remains as a compatibility entrypoint and delegates to the new CLI.

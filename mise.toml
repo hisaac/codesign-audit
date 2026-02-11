@@ -2,24 +2,17 @@
 experimental = true
 lockfile = true
 
-[plugins]
-xcode = "https://github.com/hisaac/mise-xcode.git"
-
-[env._.xcode]
-version = "26"
+[env]
+_.file = ".env"
 
 [tools]
 actionlint = "latest"
 hk = "latest"
 pkl = "latest"
+ruby = "4"
 shfmt = "latest"
 usage = "latest"
-xcsift = "latest"
 yamlfmt = "latest"
-
-[tools.swift]
-version = "latest"
-os = ["linux"]
 
 [hooks]
 postinstall = '''
@@ -35,22 +28,11 @@ includes = ["scripts"]
 
 [tasks.bootstrap]
 alias = "up"
-run = ["hk install", { task = "update-hk-import" }]
-
-[tasks.build]
-description = "Build the CLI"
-usage = '''
-arg "<configuration>" {
-  choices "debug" "release"
-  default "debug"
-}
-'''
-run = "swift build --configuration ${usage_configuration?}"
+run = ["hk install", { task = "update-hk-import" }, "bundle install"]
 
 [tasks.run]
-alias = "codesign-audit"
-depends = ["build"]
-run = "swift run --skip-build codesign-audit"
+alias = ["codesign-audit", "csa"]
+run = "bundle exec bin/csa"
 
 [tasks.check]
 alias = ["chk", "lint"]
@@ -61,14 +43,4 @@ alias = ["fmt", "format"]
 run = "hk run fix --all"
 
 [tasks.clean]
-run = "swift package clean"
-
-[tasks.nuke]
-depends = ["clean"]
-run = [
-  "rm -rf ./.build",
-  "rm -rf ./DerivedData",
-  "rm -rf ${HOME}/Library/Caches/org.swift.swiftpm",
-  "rm -rf ${HOME}/Library/Developer/Xcode/DerivedData",
-  "rm -rf ${HOME}/Library/org.swift.swiftpm",
-]
+run = ""

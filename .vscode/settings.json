@@ -3,13 +3,17 @@
         "appstoreconnect",
         "cschk",
         "killall",
+        "mobileprovision",
         "Noora",
+        "provisionprofile",
+        "rubocop",
         "shellcheck",
         "shfmt",
         "swiftpm",
         "xcodes",
         "xcsift",
         "xcworkspacedata",
-        "xlarge"
+        "xlarge",
+        "yardoc"
     ]
 }

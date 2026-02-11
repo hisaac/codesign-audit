@@ -1,9 +1,24 @@
 .DS_Store
 .env
-.netrc
-.swiftpm/configuration/registries.json
-.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
-/.build
-/Packages
-DerivedData/
-xcuserdata/
+
+# Certificates and Provisioning profiles
+*.cer
+*.mobileprovision
+*.p12
+*.p8
+*.pem
+*.provisionprofile
+
+# Bundler / Ruby dependencies
+/.bundle/
+/vendor/bundle/
+
+# Ruby tool/cache output
+/.ruby-lsp/
+/.rubocop_cache/
+/.yardoc/
+/_yardoc/
+/coverage/
+
+# Gem packaging artifacts
+/*.gem
