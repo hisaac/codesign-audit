@@ -13,8 +13,8 @@ module CSA
       CERTIFICATE_HEADINGS = %w[display_name type platform expiration_date days_until_expiration].freeze
       PROFILE_HEADINGS = %w[name profile_type platform profile_state expiration_date days_until_expiration].freeze
 
-      def initialize(selected_asset:, certificate_rows:, profile_rows:)
-        @selected_asset = selected_asset
+      def initialize(included_assets:, certificate_rows:, profile_rows:)
+        @included_assets = included_assets
         @certificate_rows = certificate_rows
         @profile_rows = profile_rows
       end
@@ -29,11 +29,11 @@ module CSA
       private
 
       def include_certificates?
-        @selected_asset.nil? || @selected_asset == 'certificates'
+        @included_assets.nil? || @included_assets.include?('certificates')
       end
 
       def include_profiles?
-        @selected_asset.nil? || @selected_asset == 'profiles'
+        @included_assets.nil? || @included_assets.include?('profiles')
       end
 
       def format_rows(rows)

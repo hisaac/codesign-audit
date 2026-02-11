@@ -8,17 +8,17 @@ module CSA
       @config = config
     end
 
-    def fetch(selected_asset:)
-      return fetch_for_mode(in_house: true, selected_asset: selected_asset) if @config.in_house?
+    def fetch(included_assets:)
+      return fetch_for_mode(in_house: true, included_assets: included_assets) if @config.in_house?
 
-      fetch_for_mode(in_house: false, selected_asset: selected_asset)
+      fetch_for_mode(in_house: false, included_assets: included_assets)
     rescue StandardError
-      fetch_for_mode(in_house: true, selected_asset: selected_asset)
+      fetch_for_mode(in_house: true, included_assets: included_assets)
     end
 
     private
 
-    def fetch_for_mode(in_house:, selected_asset:)
+    def fetch_for_mode(in_house:, included_assets:)
       token = Spaceship::ConnectAPI::Token.create(
         key_id: @config.api_key_id,
         issuer_id: @config.api_issuer_id,
@@ -28,12 +28,12 @@ module CSA
       )
       Spaceship::ConnectAPI.token = token
 
-      certificates = if selected_asset.nil? || selected_asset == 'certificates'
+      certificates = if included_assets.nil? || included_assets.include?('certificates')
                        Spaceship::ConnectAPI::Certificate.all
                      else
                        []
                      end
-      profiles = if selected_asset.nil? || selected_asset == 'profiles'
+      profiles = if included_assets.nil? || included_assets.include?('profiles')
                    Spaceship::ConnectAPI::Profile.all
                  else
                    []
