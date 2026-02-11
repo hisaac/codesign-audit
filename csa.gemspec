@@ -32,6 +32,5 @@ Gem::Specification.new do |spec|
   spec.executables = ['csa']
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'fastlane'
-  spec.add_dependency 'terminal-table'
+  spec.add_dependency 'fastlane', '~> 2'
 end
