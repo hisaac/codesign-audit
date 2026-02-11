@@ -15,10 +15,15 @@ module CSA
       Warning.singleton_class.class_eval do
         alias_method :csa_original_warn, :warn
 
-        define_method(:warn) do |message|
+        define_method(:warn) do |*args, **kwargs|
+          message = args.first
           return if CSA::WarningFilter.suppressed?(message)
 
-          csa_original_warn(message)
+          if kwargs.empty?
+            csa_original_warn(*args)
+          else
+            csa_original_warn(*args, **kwargs)
+          end
         end
       end
 
