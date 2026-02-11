@@ -2,8 +2,7 @@ PATH
   remote: .
   specs:
     csa (0.2.0)
-      fastlane
-      terminal-table
+      fastlane (~> 2)
 
 GEM
   remote: https://rubygems.org/
