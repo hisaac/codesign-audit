@@ -34,7 +34,7 @@ run = ["hk install", { task = "update-hk-import" }, "bundle install"]
 alias = "upd"
 run = [
   "mise upgrade --bump",
-  "bundle update",
+  "bundle update --all",
   "bundle clean --force",
   { task = "update-hk-import" },
 ]
