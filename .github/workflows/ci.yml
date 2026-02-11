@@ -15,28 +15,26 @@ env:
   MISE_ENV: ci
 
 jobs:
-  build:
-    strategy:
-      fail-fast: false
-      matrix:
-        runs-on:
-          - macos-26
-          - ubuntu-latest
-    runs-on: ${{ matrix.runs-on }}
+  check:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
       - uses: jdx/mise-action@v3
-
-      # Cache Swift Package Manager dependencies
-      # https://swiftonserver.com/faster-github-actions-ci-for-swift-projects/
-      # https://brightdigit.com/tutorials/swift-build/#-matrix-testing-the-game-changer:~:text=Step%203%3A%20Intelligent%20Caching%20Strategy
-      - uses: actions/cache@v5
+      - uses: ruby/setup-ruby@v1
         with:
-          path: |
-            .build
-            ~/.cache/org.swift.swiftpm
-          key: ${{ runner.os }}-spm-${{ hashFiles('Package.swift', 'Package.resolved') }}
-          restore-keys: |
-            ${{ runner.os }}-spm-
+          bundler-cache: true
 
-      - run: mise run build release
+      - name: Syntax checks
+        run: |
+          ruby -c csa.rb
+          ruby -c bin/csa
+          find lib -name '*.rb' -print0 | xargs -0 -n1 ruby -c
+
+      - name: Lint
+        run: bundle exec rubocop --fail-level E
+
+      - name: Smoke checks
+        run: |-
+          bundle exec ruby bin/csa --help
+          bundle exec ruby bin/csa --version
+          bundle exec ruby csa.rb --version
