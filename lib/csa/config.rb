@@ -2,21 +2,19 @@
 
 module CSA
   class Config
-    FILTER_ALIASES = {
-      'error' => 'error',
-      'errors' => 'error',
-      'expired' => 'error',
-      'warn' => 'warn',
-      'warning' => 'warn',
-      'warnings' => 'warn',
-      'expiring_or_invalid' => 'warn',
-      'ok' => 'ok',
-      'fine' => 'ok',
-      'good' => 'ok'
+    STATUS_ALIASES = {
+      'expired' => 'expired',
+      'expiring' => 'expiring_soon',
+      'expiring_soon' => 'expiring_soon',
+      'invalid' => 'invalid',
+      'ok' => 'ok'
     }.freeze
-    VALID_FILTERS = %w[error warn ok].freeze
+    VALID_STATUSES = %w[expired expiring_soon invalid ok].freeze
+    VALID_TYPES = %w[development distribution].freeze
+    VALID_ASSETS = %w[certificates profiles].freeze
 
-    attr_reader :api_key_id, :api_issuer_id, :api_key_file, :api_key_content, :selected_filters
+    attr_reader :api_key_id, :api_issuer_id, :api_key_file, :api_key_content, :included_statuses, :included_types,
+                :included_assets
 
     def initialize(options)
       @api_key_id = options[:api_key_id] || ENV.fetch('ASC_KEY_ID', nil)
@@ -26,8 +24,9 @@ module CSA
       @api_key_content = resolve_api_key_content(options[:api_key_stdin], explicit_api_key_file)
       @in_house = options[:in_house]
       @json = options[:json]
-      @exclude_development = options[:exclude_development]
-      @selected_filters = resolve_selected_filters(options[:filter])
+      @included_statuses = resolve_included_statuses(options[:include_statuses])
+      @included_types = resolve_included_types(options[:include_types])
+      @included_assets = resolve_included_assets(options[:include_assets])
     end
 
     def in_house?
@@ -36,10 +35,6 @@ module CSA
 
     def json?
       @json
-    end
-
-    def exclude_development?
-      @exclude_development
     end
 
     private
@@ -68,20 +63,53 @@ module CSA
       key_content
     end
 
-    def resolve_selected_filters(filter_string)
-      return nil unless filter_string
+    def resolve_included_statuses(include_statuses_string)
+      return nil unless include_statuses_string
 
-      selected = filter_string
+      selected = include_statuses_string
                  .split(',')
                  .map { |value| value.strip.downcase }
                  .reject(&:empty?)
-                 .map { |value| FILTER_ALIASES[value] || value }
+                 .map { |value| STATUS_ALIASES[value] || value }
                  .uniq
 
-      invalid_filters = selected - VALID_FILTERS
-      return selected if invalid_filters.empty?
+      invalid_statuses = selected - VALID_STATUSES
+      return selected if invalid_statuses.empty?
 
-      raise UserError, "Invalid filter(s): #{invalid_filters.join(', ')}. Expected: #{VALID_FILTERS.join(', ')}"
+      raise UserError,
+            "Invalid include-statuses value(s): #{invalid_statuses.join(', ')}. Expected: #{VALID_STATUSES.join(', ')}"
+    end
+
+    def resolve_included_types(include_types_string)
+      return nil unless include_types_string
+
+      selected = include_types_string
+                 .split(',')
+                 .map { |value| value.strip.downcase }
+                 .reject(&:empty?)
+                 .uniq
+
+      invalid_types = selected - VALID_TYPES
+      return selected if invalid_types.empty?
+
+      raise UserError,
+            "Invalid include-types value(s): #{invalid_types.join(', ')}. Expected: #{VALID_TYPES.join(', ')}"
+    end
+
+    def resolve_included_assets(include_assets_string)
+      return nil unless include_assets_string
+
+      selected = include_assets_string
+                 .split(',')
+                 .map { |value| value.strip.downcase }
+                 .reject(&:empty?)
+                 .uniq
+
+      invalid_assets = selected - VALID_ASSETS
+      return selected if invalid_assets.empty?
+
+      raise UserError,
+            "Invalid include-assets value(s): #{invalid_assets.join(', ')}. Expected: #{VALID_ASSETS.join(', ')}"
     end
   end
 end
