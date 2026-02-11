@@ -30,6 +30,15 @@ includes = ["scripts"]
 alias = "up"
 run = ["hk install", { task = "update-hk-import" }, "bundle install"]
 
+[tasks.update]
+alias = "upd"
+run = [
+  "mise upgrade --bump",
+  "bundle update",
+  "bundle clean --force",
+  { task = "update-hk-import" },
+]
+
 [tasks.run]
 alias = ["codesign-audit", "csa"]
 run = "bundle exec bin/csa"
@@ -43,4 +52,16 @@ alias = ["fmt", "format"]
 run = "hk run fix --all"
 
 [tasks.clean]
-run = ""
+alias = ["cln", "nuke"]
+run = [
+  "rm -f *.gem",
+  "rm -rf .bundle",
+  "rm -rf .rubocop_cache",
+  "rm -rf .ruby-lsp",
+  "rm -rf .yardoc",
+  "rm -rf coverage",
+  "rm -rf pkg",
+  "rm -rf tmp",
+  "rm -rf vendor/bundle",
+  "bundle clean --force",
+]

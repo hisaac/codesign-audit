@@ -1,19 +1,11 @@
 {
-    "cSpell.words": [
-        "appstoreconnect",
-        "cschk",
-        "killall",
-        "mobileprovision",
-        "Noora",
-        "provisionprofile",
-        "rubocop",
-        "shellcheck",
-        "shfmt",
-        "swiftpm",
-        "xcodes",
-        "xcsift",
-        "xcworkspacedata",
-        "xlarge",
-        "yardoc"
-    ]
+	"cSpell.words": [
+		"appstoreconnect",
+		"mobileprovision",
+		"provisionprofile",
+		"rubocop",
+		"shellcheck",
+		"shfmt",
+		"yardoc"
+	]
 }
