@@ -67,6 +67,10 @@ module CSA
             Uses the App Store Connect API or Apple Enterprise API to fetch and display information
             about certificates and provisioning profiles associated with an Apple Developer account.
 
+          Current limitation:
+            Apple Push Notification / Apple Push Services certificates are not exposed by the
+            App Store Connect certificates API used by this CLI, so they are not included.
+
           Environment:
             ASC_KEY_ID         Fallback for --api-key-id
             ASC_ISSUER_ID      Fallback for --api-issuer-id

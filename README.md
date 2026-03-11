@@ -1,7 +1,7 @@
 # csa
 
 `csa` is a Ruby CLI for querying Apple App Store Connect and Enterprise APIs for:
-- Code-signing certificates
+- Certificates exposed by Apple's certificates API
 - Provisioning profiles
 
 ## Installation
@@ -30,6 +30,48 @@ Provide App Store Connect API credentials via flags or environment:
 - `ASC_KEY_FILE`
 
 The CLI also auto-detects `AuthKey_<KEY_ID>.p8` in the current directory when `ASC_KEY_ID` (or `--api-key-id`) is set.
+
+### How certificate reporting works
+
+Certificate data is fetched directly from Apple's `/v1/certificates` endpoint using the configured API key. By calling Apple's raw certificates endpoint directly instead of relying only on fastlane/`spaceship`'s built-in certificate enums, `csa` reports whatever certificate records Apple actually returns for the authenticated account and selected API mode.
+
+Relevant Apple docs:
+
+- [App Store Connect API: Certificates](https://developer.apple.com/documentation/appstoreconnectapi/certificates)
+- [App Store Connect API: CertificateType](https://developer.apple.com/documentation/appstoreconnectapi/certificatetype)
+- [Enterprise Program API: Certificates](https://developer.apple.com/documentation/enterpriseprogramapi/certificates)
+- [Enterprise Program API: CertificateType](https://developer.apple.com/documentation/enterpriseprogramapi/certificatetype)
+
+### Important limitation: API-visible certificate types
+
+Even with the raw API fetch, `csa` can only report certificate types that Apple exposes through the App Store Connect / Enterprise certificates APIs.
+
+Apple's published `CertificateType` documentation for those APIs currently lists:
+
+- `DEVELOPER_ID_APPLICATION`
+- `DEVELOPER_ID_APPLICATION_G2`
+- `DEVELOPER_ID_KEXT`
+- `DEVELOPER_ID_KEXT_G2`
+- `DEVELOPMENT`
+- `DISTRIBUTION`
+- `IOS_DEVELOPMENT`
+- `IOS_DISTRIBUTION`
+- `MAC_APP_DEVELOPMENT`
+- `MAC_APP_DISTRIBUTION`
+- `MAC_INSTALLER_DISTRIBUTION`
+- `PASS_TYPE_ID`
+- `PASS_TYPE_ID_WITH_NFC`
+
+APNs / Apple Push Services certificate types are not documented there, so they do **not** appear in `csa` output. That is an API limitation, not a local filter and not a `mise run csa` issue.
+
+### Note on `--include-types`
+
+The `--include-types` option is intentionally coarse and currently maps certificates into just two buckets for filtering:
+
+- anything marked `development` is considered `development`
+- anything marked with either nothing or something other than `development` is considered `distribution`
+
+This affects filtering behavior only. If you do **not** pass `--include-types`, all certificate records returned by Apple's API are included by default.
 
 ## Usage
 
