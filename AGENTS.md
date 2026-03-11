@@ -118,6 +118,21 @@ mise run fix
 
 Use `mise run check` after any change to verify the repo is still clean. If formatting or lint autofixes are needed, run `mise run fix` and then rerun `mise run check`.
 
+## Optional local tools
+
+If these tools are available locally and would help with the task, prefer using them:
+
+- `ast-grep` - structural code search/refactoring; especially useful for non-trivial Ruby refactors where regex would be brittle
+- `difftastic` / `delta` - easier diff review when understanding or checking changes
+- `shellcheck` - already part of repo checks, but still useful directly when iterating on shell scripts
+- `sd` - simpler search/replace than raw `sed` for safe text substitutions
+- `yq` - useful for inspecting or updating YAML such as GitHub Actions/workflow files
+- `comby` - structural-ish search/replace when `ast-grep` is not the right fit
+- `hyperfine` - benchmark command variants if performance comparisons matter
+- `scc` - quick codebase shape/language stats when project sizing is useful
+
+If one of these would clearly improve accuracy or speed for the task but is not installed yet, mention that it would be beneficial to install it.
+
 ## Validation notes
 
 There is currently no `spec/` or `test/` directory in the repo.
