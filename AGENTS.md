@@ -39,7 +39,7 @@ Normal path:
 2. `require_relative '../lib/csa'`
 3. `CSA::CLI.run(ARGV)`
 4. `Config` resolves credentials and filters
-5. `ConnectClient#fetch` loads certificates/profiles from `Spaceship::ConnectAPI`
+5. `ConnectClient#fetch` loads certificates via direct HTTP calls to Apple's `/v1/certificates` endpoint and profiles via `Spaceship::ConnectAPI`
 6. `RecordNormalizer` converts API objects to plain hashes
 7. `Filtering.apply` narrows rows by status/type/assets
 8. Chosen renderer outputs tables or JSON
@@ -54,7 +54,7 @@ The CLI reads credentials from flags or environment:
 
 It also auto-detects `AuthKey_<KEY_ID>.p8` in the current working directory if `ASC_KEY_ID` is provided and no explicit key file is set.
 
-The repo currently contains `.p8` key files in the root. Treat them as sensitive. Do not print, move, or modify key contents unless the task explicitly requires it.
+Your local checkout may include `.p8` key files in the root. Treat any such files as sensitive. Do not print, move, or modify key contents unless the task explicitly requires it.
 
 `mise.toml` loads `.env` through:
 
@@ -115,6 +115,8 @@ Checks / formatting:
 mise run check
 mise run fix
 ```
+
+Use `mise run check` after any change to verify the repo is still clean. If formatting or lint autofixes are needed, run `mise run fix` and then rerun `mise run check`.
 
 ## Validation notes
 

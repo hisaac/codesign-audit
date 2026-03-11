@@ -69,25 +69,14 @@ module CSA
 
     def get_json(url, token)
       uri = URI(url)
-      request = Net::HTTP::Get.new(uri)
-      request['Authorization'] = "Bearer #{token.text}"
-      request['Content-Type'] = 'application/json'
-
       response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
-        http.request(request)
+        http.request(build_request(uri, token))
       end
-
-      parsed_body = response.body.to_s.empty? ? {} : JSON.parse(response.body)
+      parsed_body = parse_response_body(response)
       return parsed_body if response.is_a?(Net::HTTPSuccess)
 
-      message =
-        if parsed_body['errors']
-          parsed_body['errors'].map { |error| error['detail'] || error['title'] || error['code'] }.compact.join('; ')
-        else
-          response.body.to_s
-        end
-
-      raise "Certificate API request failed (#{response.code}): #{message}"
+      message = response_error_message(response, parsed_body)
+      raise CSA::UserError, "Certificate API request failed (#{response.code}): #{message}"
     end
 
     def normalize_certificate(item)
@@ -105,6 +94,30 @@ module CSA
            .gsub(/([a-z\d])([A-Z])/, '\1_\2')
            .tr('-', '_')
            .downcase
+    end
+
+    def build_request(uri, token)
+      Net::HTTP::Get.new(uri).tap do |request|
+        request['Authorization'] = "Bearer #{token.text}"
+        request['Content-Type'] = 'application/json'
+      end
+    end
+
+    def parse_response_body(response)
+      body = response.body.to_s
+      return {} if body.empty?
+
+      JSON.parse(body)
+    rescue JSON::ParserError
+      raise if response.is_a?(Net::HTTPSuccess)
+
+      {}
+    end
+
+    def response_error_message(response, parsed_body)
+      return response.body.to_s unless parsed_body['errors']
+
+      parsed_body['errors'].map { |error| error['detail'] || error['title'] || error['code'] }.compact.join('; ')
     end
   end
 end

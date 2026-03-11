@@ -69,7 +69,7 @@ module CSA
 
           Current limitation:
             Apple Push Notification / Apple Push Services certificates are not exposed by the
-            App Store Connect certificates API used by this CLI, so they are not included.
+            App Store Connect / Enterprise certificates APIs used by this CLI, so they are not included.
 
           Environment:
             ASC_KEY_ID         Fallback for --api-key-id
