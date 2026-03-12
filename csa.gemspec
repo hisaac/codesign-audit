@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
 
   spec.name = 'csa'
   spec.version = CSA::VERSION
-  spec.summary = 'CLI for querying App Store Connect signing certificates and profiles'
-  spec.description = 'Command-line tool for querying Apple App Store Connect and Enterprise APIs for code-signing certificates and provisioning profiles.'
+  spec.summary = 'CLI for querying App Store Connect certificates and profiles'
+  spec.description = 'Command-line tool for querying Apple App Store Connect and Enterprise APIs for certificate records exposed by Apple''s certificates API, along with provisioning profiles.'
   spec.authors = ['Isaac Halvorson']
   spec.license = 'MIT'
   spec.homepage = csa_path

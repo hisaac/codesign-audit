@@ -6,13 +6,13 @@ lockfile = true
 _.file = ".env"
 
 [tools]
-actionlint = "latest"
-hk = "latest"
-pkl = "latest"
+actionlint = "1"
+hk = "1"
+pkl = "0"
 ruby = "4"
-shfmt = "latest"
-usage = "latest"
-yamlfmt = "latest"
+shfmt = "3"
+usage = "2"
+yamlfmt = "0"
 
 [hooks]
 postinstall = '''
@@ -34,6 +34,7 @@ run = ["hk install", { task = "update-hk-import" }, "bundle install"]
 alias = "upd"
 run = [
   "mise upgrade --bump",
+  "mise lock",
   "bundle update --all",
   "bundle clean --force",
   { task = "update-hk-import" },
