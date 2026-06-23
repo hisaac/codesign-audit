@@ -11,7 +11,7 @@ hk = "1"
 pkl = "0"
 ruby = "4"
 shfmt = "3"
-usage = "2"
+usage = "3"
 yamlfmt = "0"
 
 [hooks]
@@ -31,7 +31,7 @@ alias = "up"
 run = ["hk install", { task = "update-hk-import" }, "bundle install"]
 
 [tasks.update]
-alias = "upd"
+alias = ["upd", "upg"]
 run = [
   "mise upgrade --bump",
   "mise lock",
